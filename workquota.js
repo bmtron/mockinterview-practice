@@ -21,13 +21,13 @@ function quota(year) {
 function monthlyCommission(percent) {
     let payout = 0;
     if (percent < 70) {
-        payout = percent * 11.66;
+        payout = percent * 11.90;
     }
     else if (percent > 70 && percent < 100) {
-        payout = (70 * 11.66) + ((percent - 70) * 28.33); 
+        payout = 833.33 + (27.78 * percent); 
     }
     else {
-        payout = 1666 + (percent - 100) * 11.66;
+        payout = 1666 + (percent - 100) * 41.67;
     }
     return Math.floor(payout);
 }
@@ -49,7 +49,7 @@ function dollarsPerDay(goal, totRev, year, time) {
 
     let remDay = time; 
 
-    let perDay = diff / remDay;
+    let perDay = Math.floor(diff / remDay);
 
     console.log(`You need to sell $${perDay} of rev per day for the rest of the month to reach your goal.`);
 
@@ -64,6 +64,6 @@ function fiscalMonth() {
     }
 }
 
-let goal = dollarsPerDay(11000, 4500, 1, 13);
+let goal = dollarsPerDay(9000, 4500, 1, 13);
 
 console.log(goal);
