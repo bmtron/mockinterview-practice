@@ -1,11 +1,11 @@
 
 
-function percentToQuota(rev, year) {
+function percentToQuota(rev, year) { //calculates your percentage to quota attainment and takes two arguments, your current revenue and how many years youve been with the company
     let userQuota= quota(year);
     return Math.floor((rev / userQuota) * 100);
 }
 
-function quota(year) {
+function quota(year) { //determines what your quota is based on the argument passed in, years youve been with the company
     let quota = 0;
     
     if (year <= 1) {
@@ -18,7 +18,7 @@ function quota(year) {
     }
 }
 
-function monthlyCommission(percent) {
+function monthlyCommission(percent) { //calculates current projected commission payout based on current attainment percentage as calculated in percentToQuota function
     let payout = 0;
     if (percent < 70) {
         payout = percent * 11.66;
@@ -32,11 +32,9 @@ function monthlyCommission(percent) {
     return Math.floor(payout);
 }
 
-let per = percentToQuota(4350, 1);
+function dollarsPerDay(goal, totRev, year) { //calculates how many dollars per day are needed to achieve revenue goal based on current day in the fiscal month
 
-function dollarsPerDay(goal, totRev, year, time) {
-    let h = quota(year);
-    console.log(`Your current payout is ${monthlyCommission(percentToQuota(totRev, year))}.`);
+    console.log(`Your current payout is $${monthlyCommission(percentToQuota(totRev, year))}.`);
 
     let target = goal;
 
@@ -47,23 +45,27 @@ function dollarsPerDay(goal, totRev, year, time) {
 
     console.log(`Your payout if you hit your target will be $${monthlyCommission(percentToQuota(target, year))}`);
 
-    let remDay = time; 
-
-    let perDay = diff / remDay;
+    let perDay = diff / fiscalMonth();
 
     console.log(`You need to sell $${perDay} of rev per day for the rest of the month to reach your goal.`);
 
-
 }
 
-function fiscalMonth() {
+function fiscalMonth() { //calculates how many days are left in the fiscal month
     let today = new Date();
 
-    if (today.getDay() > 21) {
-        let daysLeft = today.getMonth();
-    }
+    let fiscEnd = new Date(today.getFullYear(), today.getMonth() + 1, 21);
+   
+    let daysLeft = fiscEnd - today;
+    daysLeft = Math.floor(daysLeft / 24 / 60 / 60 / 1000);
+    
+
+    return daysLeft;
 }
+function goalPercent(percent, year) { //used to replace straight dollar value input for goal as a percentage of quota attainment
+    let q = quota(year);
+    let p = percent / 100;
 
-let goal = dollarsPerDay(11000, 4500, 1, 13);
-
-console.log(goal);
+    return q * p;
+}
+let goal = dollarsPerDay(goalPercent(227, 2), 1250, 1);
