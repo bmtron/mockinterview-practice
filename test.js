@@ -63,5 +63,5 @@ function findLongestPalindrome(sentence) {
     }
   }
 
-let test = findLongestPalindrome('Hello there my little wow illi mim racecar racecar');
+let test = findLongestPalindrome('Hello there my little wow illi mim racecar racecar viviviviviv');
 console.log(test);
