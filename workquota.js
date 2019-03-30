@@ -20,11 +20,11 @@ function quota(year) { //determines what your quota is based on the argument pas
 
 function monthlyCommission(percent) { //calculates current projected commission payout based on current attainment percentage as calculated in percentToQuota function
     let payout = 0;
-    if (percent < 70) {
+    if (percent <= 70) {
         payout = percent * 11.90;
     }
     else if (percent > 70 && percent < 100) {
-        payout = 833.33 + (27.78 * percent); 
+        payout = 833.33 + (27.78 * (percent - 70)); 
     }
     else {
         payout = 1666 + (percent - 100) * 41.67;
@@ -45,7 +45,7 @@ function dollarsPerDay(goal, totRev, year) { //calculates how many dollars per d
 
     console.log(`Your payout if you hit your target will be $${monthlyCommission(percentToQuota(target, year))}`);
 
-    let perDay = diff / fiscalMonth();
+    let perDay = Math.floor(diff / fiscalMonth());
 
     console.log(`You need to sell $${perDay} of rev per day for the rest of the month to reach your goal.`);
 
@@ -68,4 +68,4 @@ function goalPercent(percent, year) { //used to replace straight dollar value in
 
     return q * p;
 }
-let goal = dollarsPerDay(goalPercent(227, 2), 1250, 1);
+let goal = dollarsPerDay(goalPercent(80, 1), 1500, 1);
